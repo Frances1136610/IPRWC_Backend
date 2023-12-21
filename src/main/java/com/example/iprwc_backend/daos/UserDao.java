@@ -39,4 +39,15 @@ public class UserDao {
         return this.uniqueIdService.
                 checkIfUserIdIsUnique(users, id);
     }
+
+    public Optional<User> findByEmail(String email) {
+        ArrayList<User> users = (ArrayList<User>) userRepository.findAll();
+
+        for (User user : users) {
+            if (user.getEmail().contains(email)) {
+                return Optional.ofNullable(user);
+            }
+        }
+        return Optional.empty();
+    }
 }
