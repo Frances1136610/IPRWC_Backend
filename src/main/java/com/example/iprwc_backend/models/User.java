@@ -5,7 +5,7 @@ import lombok.NoArgsConstructor;
 
 @Entity
 @NoArgsConstructor
-@Table(name = "employee")
+@Table(name = "users")
 public class User {
     @Id
     private long id;
