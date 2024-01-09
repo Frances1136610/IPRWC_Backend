@@ -33,10 +33,15 @@ public class AuthController {
 
     @PostMapping("/register")
     public Object registerHandler(@RequestBody Customer customer) {
+        System.out.println("CHECK");
         try {
+            System.out.println("CHECK1");
+            System.out.println(customer);
             if (invalidEmailService.patternMatches(customer.getEmail())) {
+                System.out.println("CHECK2");
                 String encodedPass = passwordEncoder.encode(customer.getPassword());
                 customer.setPassword(encodedPass);
+                System.out.println("ID: " + customer.getId());
                 userDao.saveToDatabase(customer);
                 return jwtUtil.generateToken(customer.getEmail());
             } else {
