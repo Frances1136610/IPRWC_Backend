@@ -1,9 +1,8 @@
 package com.example.iprwc_backend.daos;
 
-import com.example.iprwc_backend.models.User;
+import com.example.iprwc_backend.models.Customer;
 import com.example.iprwc_backend.services.UniqueIdService;
 import org.springframework.stereotype.Component;
-
 import java.util.ArrayList;
 import java.util.Optional;
 
@@ -17,15 +16,15 @@ public class UserDao {
         this.uniqueIdService = uniqueIdService;
     }
 
-    public void saveToDatabase(User user) {
-        this.userRepository.save(user);
+    public void saveToDatabase(Customer customer) {
+        this.userRepository.save(customer);
     }
 
-    public ArrayList<User> getAllUsers() {
-        return (ArrayList<User>) this.userRepository.findAll();
+    public ArrayList<Customer> getAllUsers() {
+        return (ArrayList<Customer>) this.userRepository.findAll();
     }
 
-    public Optional<User> getSpecificUser(Long id) {
+    public Optional<Customer> getSpecificUser(Long id) {
         return this.userRepository.findById(id);
     }
 
@@ -34,18 +33,18 @@ public class UserDao {
     }
 
     public boolean isUserIdUnique(long id) {
-        ArrayList<User> users =
-                (ArrayList<User>) this.userRepository.findAll();
+        ArrayList<Customer> customers =
+                (ArrayList<Customer>) this.userRepository.findAll();
         return this.uniqueIdService.
-                checkIfUserIdIsUnique(users, id);
+                checkIfUserIdIsUnique(customers, id);
     }
 
-    public Optional<User> findByEmail(String email) {
-        ArrayList<User> users = (ArrayList<User>) userRepository.findAll();
+    public Optional<Customer> findByEmail(String email) {
+        ArrayList<Customer> customers = (ArrayList<Customer>) userRepository.findAll();
 
-        for (User user : users) {
-            if (user.getEmail().contains(email)) {
-                return Optional.ofNullable(user);
+        for (Customer customer : customers) {
+            if (customer.getEmail().contains(email)) {
+                return Optional.ofNullable(customer);
             }
         }
         return Optional.empty();

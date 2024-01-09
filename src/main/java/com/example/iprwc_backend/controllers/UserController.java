@@ -2,7 +2,7 @@ package com.example.iprwc_backend.controllers;
 
 import com.example.iprwc_backend.daos.UserDao;
 import com.example.iprwc_backend.models.ApiResponse;
-import com.example.iprwc_backend.models.User;
+import com.example.iprwc_backend.models.Customer;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
@@ -21,10 +21,10 @@ public class UserController {
 
     @RequestMapping(value = "/{id}", method = RequestMethod.GET)
     @ResponseBody
-    public ApiResponse<ArrayList<User>> getEmployeeById(@PathVariable Long id) {
+    public ApiResponse<ArrayList<Customer>> getEmployeeById(@PathVariable Long id) {
         SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 
-        Optional<User> employee = this.userDao.getSpecificUser(id);
+        Optional<Customer> employee = this.userDao.getSpecificUser(id);
         if (employee.isEmpty()) {
             return new ApiResponse(HttpStatus.NOT_FOUND, "no employee with that id");
         }

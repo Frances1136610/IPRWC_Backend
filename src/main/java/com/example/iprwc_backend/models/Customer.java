@@ -6,13 +6,13 @@ import lombok.NoArgsConstructor;
 @Entity
 @NoArgsConstructor
 @Table(name = "users")
-public class User {
+public class Customer {
     @Id
     private long id;
     private String email;
     private String password;
 
-    public User(long id, String email, String password) {
+    public Customer(long id, String email, String password) {
         this.id = id;
         this.email = email;
         this.password = password;

@@ -4,7 +4,7 @@ import com.example.iprwc_backend.Security.JwtUtil;
 import com.example.iprwc_backend.daos.UserDao;
 import com.example.iprwc_backend.models.ApiResponse;
 import com.example.iprwc_backend.models.LoginCredentials;
-import com.example.iprwc_backend.models.User;
+import com.example.iprwc_backend.models.Customer;
 import com.example.iprwc_backend.services.InvalidEmailService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -32,13 +32,13 @@ public class AuthController {
     }
 
     @PostMapping("/register")
-    public Object registerHandler(@RequestBody User user) {
+    public Object registerHandler(@RequestBody Customer customer) {
         try {
-            if (invalidEmailService.patternMatches(user.getEmail())) {
-                String encodedPass = passwordEncoder.encode(user.getPassword());
-                user.setPassword(encodedPass);
-                userDao.saveToDatabase(user);
-                return jwtUtil.generateToken(user.getEmail());
+            if (invalidEmailService.patternMatches(customer.getEmail())) {
+                String encodedPass = passwordEncoder.encode(customer.getPassword());
+                customer.setPassword(encodedPass);
+                userDao.saveToDatabase(customer);
+                return jwtUtil.generateToken(customer.getEmail());
             } else {
                 return new ApiResponse(HttpStatus.BAD_REQUEST, "Invalid email");
             }

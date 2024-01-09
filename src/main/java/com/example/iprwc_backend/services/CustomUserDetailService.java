@@ -1,7 +1,7 @@
 package com.example.iprwc_backend.services;
 
 import com.example.iprwc_backend.daos.UserDao;
-import com.example.iprwc_backend.models.User;
+import com.example.iprwc_backend.models.Customer;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -18,13 +18,13 @@ public class CustomUserDetailService implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
-        Optional<User> userOptional = userDao.findByEmail(email);
+        Optional<Customer> userOptional = userDao.findByEmail(email);
         if(userOptional.isEmpty())
             throw new UsernameNotFoundException("Could not findUser with email = " + email);
-        User user = userOptional.get();
+        Customer customer = userOptional.get();
         return new org.springframework.security.core.userdetails.User(
                 email,
-                user.getPassword(),
+                customer.getPassword(),
                 Collections.singletonList(new SimpleGrantedAuthority("ROLE_USER")));
     }
 }
