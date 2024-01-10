@@ -1,8 +1,6 @@
 package com.example.iprwc_backend.daos;
 
 import com.example.iprwc_backend.models.Cart;
-import com.example.iprwc_backend.models.Customer;
-import com.example.iprwc_backend.models.Product;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
@@ -14,6 +12,17 @@ public class CartDao {
 
     public CartDao(CartRepository cartRepository){
         this.cartRepository = cartRepository;
+    }
+
+    public Cart getCart(Long id) {
+        ArrayList<Cart> carts = (ArrayList<Cart>) cartRepository.findAll();
+
+        for (Cart cart : carts) {
+            if (cart.getUser().getId() == id) {
+                return cart;
+            }
+        }
+        return null;
     }
 
     public void saveToDatabase(Cart cart) {

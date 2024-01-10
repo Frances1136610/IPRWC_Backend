@@ -1,6 +1,8 @@
 package com.example.iprwc_backend.daos;
 
 import com.example.iprwc_backend.models.CartItem;
+import com.example.iprwc_backend.models.Customer;
+import com.example.iprwc_backend.services.NewIdService;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
@@ -11,9 +13,11 @@ import java.util.Optional;
 @Component
 public class CartItemDao {
     private final CartItemRepository cartItemRepository;
+    private final NewIdService newIdService;
 
-    public CartItemDao(CartItemRepository cartItemRepository) {
+    public CartItemDao(CartItemRepository cartItemRepository, NewIdService newIdService) {
         this.cartItemRepository = cartItemRepository;
+        this.newIdService = newIdService;
     }
 
     public void savetoDatabase(CartItem cartItem) { this.cartItemRepository.save(cartItem); }
@@ -38,7 +42,21 @@ public class CartItemDao {
         return this.cartItemRepository.findById(id);
     }
 
-    public void deleteProductFromDatabase(long id) {
+    public void deleteFromDatabase(long id) {
         this.cartItemRepository.deleteById(id);
+    }
+
+    public void updateQuantity(long id, long quantity) {
+        this.cartItemRepository.findById(id).ifPresent(
+                cartItem -> {
+                    cartItem.setQuantity(quantity);
+                    cartItemRepository.save(cartItem);
+                }
+        );
+    }
+
+    public Long giveNewCartItemId() {
+        ArrayList<CartItem> cartItems = (ArrayList<CartItem>) this.cartItemRepository.findAll();
+        return (Long) (long) this.newIdService.newCartItemId(cartItems);
     }
 }
