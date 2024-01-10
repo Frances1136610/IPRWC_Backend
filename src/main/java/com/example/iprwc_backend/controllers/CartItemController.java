@@ -59,11 +59,11 @@ public class CartItemController {
         return new ApiResponse(HttpStatus.ACCEPTED, "You added an item to your cart!");
     }
 
-    @RequestMapping(value = "/delete", method = RequestMethod.DELETE)
+    @RequestMapping(value = "/delete/{id}", method = RequestMethod.DELETE)
     @ResponseBody
-    public ApiResponse removeCartItem(@RequestBody CartItem cartItem) {
+    public ApiResponse removeCartItem(@PathVariable Long id) {
         SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        this.cartItemDao.deleteFromDatabase(cartItem.getId());
+        this.cartItemDao.deleteFromDatabase(id);
         return new ApiResponse(HttpStatus.ACCEPTED, "You removed an item from your cart!");
     }
 
