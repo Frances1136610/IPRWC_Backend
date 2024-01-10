@@ -8,12 +8,12 @@ import lombok.NoArgsConstructor;
 @Table(name = "users")
 public class Customer {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
     private String email;
     private String password;
 
-    public Customer(String email, String password) {
+    public Customer(Long id, String email, String password) {
+        this.id = id;
         this.email = email;
         this.password = password;
     }
