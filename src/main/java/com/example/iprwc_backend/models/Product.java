@@ -14,10 +14,13 @@ public class Product {
     private String name;
     private String description;
 
-    public Product(Long id, String name, String description) {
+    private Float price;
+
+    public Product(Long id, String name, String description, Float price) {
         this.id = id;
         this.name = name;
         this.description = description;
+        this.price = price;
     }
 
     public Long getId() {
@@ -42,5 +45,13 @@ public class Product {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public Float getPrice() {
+        return price;
+    }
+
+    public void setPrice(Float price) {
+        this.price = price;
     }
 }
