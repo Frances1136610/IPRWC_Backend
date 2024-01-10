@@ -1,7 +1,7 @@
 package com.example.iprwc_backend.daos;
 
 import com.example.iprwc_backend.models.Customer;
-import com.example.iprwc_backend.services.UniqueIdService;
+import com.example.iprwc_backend.services.NewIdService;
 import org.springframework.stereotype.Component;
 import java.util.ArrayList;
 import java.util.Optional;
@@ -9,11 +9,11 @@ import java.util.Optional;
 @Component
 public class UserDao {
     private final UserRepository userRepository;
-    private final UniqueIdService uniqueIdService;
+    private final NewIdService newIdService;
 
-    public UserDao(UserRepository userRepository, UniqueIdService uniqueIdService) {
+    public UserDao(UserRepository userRepository, NewIdService newIdService) {
         this.userRepository = userRepository;
-        this.uniqueIdService = uniqueIdService;
+        this.newIdService = newIdService;
     }
 
     public void saveToDatabase(Customer customer) {
@@ -32,13 +32,6 @@ public class UserDao {
         this.userRepository.deleteById(id);
     }
 
-    public boolean isUserIdUnique(long id) {
-        ArrayList<Customer> customers =
-                (ArrayList<Customer>) this.userRepository.findAll();
-        return this.uniqueIdService.
-                checkIfUserIdIsUnique(customers, id);
-    }
-
     public Optional<Customer> findByEmail(String email) {
         ArrayList<Customer> customers = (ArrayList<Customer>) userRepository.findAll();
 
@@ -48,5 +41,10 @@ public class UserDao {
             }
         }
         return Optional.empty();
+    }
+
+    public int giveNewCustomerId() {
+        ArrayList<Customer> customers = (ArrayList<Customer>) this.userRepository.findAll();
+        return this.newIdService.newCustomerId(customers);
     }
 }

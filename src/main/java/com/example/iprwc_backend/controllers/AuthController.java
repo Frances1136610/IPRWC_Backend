@@ -14,6 +14,7 @@ import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 
 @CrossOrigin(origins = {"*"}, maxAge = 4800, allowCredentials = "false")
 @RestController
@@ -28,9 +29,11 @@ public class AuthController {
     @Autowired
     private AuthenticationManager authManager;
     private final InvalidEmailService invalidEmailService;
+    private final UserDao customerDao;
 
-    public AuthController(InvalidEmailService invalidEmailService) {
+    public AuthController(InvalidEmailService invalidEmailService, UserDao customerDao) {
         this.invalidEmailService = invalidEmailService;
+        this.customerDao = customerDao;
     }
 
     @PostMapping("/register")
@@ -63,5 +66,12 @@ public class AuthController {
         } catch (AuthenticationException authExc) {
             return new ApiResponse(HttpStatus.UNAUTHORIZED, "Invalid email/password");
         }
+    }
+
+    @RequestMapping(value = "/id", method = RequestMethod.GET)
+    @ResponseBody
+    public ApiResponse<ArrayList<Customer>> getNewCustomerId() {
+        int customerId = this.customerDao.giveNewCustomerId();
+        return new ApiResponse(HttpStatus.ACCEPTED, customerId);
     }
 }
