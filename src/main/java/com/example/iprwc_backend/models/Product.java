@@ -13,14 +13,24 @@ public class Product {
     private Long id;
     private String name;
     private String description;
-
     private Float price;
 
-    public Product(Long id, String name, String description, Float price) {
+    private String image;
+
+    public Product(Long id, String name, String description, Float price, String image) {
         this.id = id;
         this.name = name;
         this.description = description;
         this.price = price;
+        this.image = image;
+    }
+
+    public String getImage() {
+        return image;
+    }
+
+    public void setImage(String image) {
+        this.image = image;
     }
 
     public Long getId() {
