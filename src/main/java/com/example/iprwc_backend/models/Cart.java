@@ -8,6 +8,7 @@ import lombok.NoArgsConstructor;
 @Table(name = "carts")
 public class Cart {
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
     @OneToOne(fetch = FetchType.EAGER)

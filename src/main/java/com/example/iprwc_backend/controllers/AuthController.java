@@ -1,8 +1,10 @@
 package com.example.iprwc_backend.controllers;
 
 import com.example.iprwc_backend.Security.JwtUtil;
+import com.example.iprwc_backend.daos.CartDao;
 import com.example.iprwc_backend.daos.UserDao;
 import com.example.iprwc_backend.models.ApiResponse;
+import com.example.iprwc_backend.models.Cart;
 import com.example.iprwc_backend.models.LoginCredentials;
 import com.example.iprwc_backend.models.Customer;
 import com.example.iprwc_backend.services.InvalidEmailService;
@@ -31,10 +33,12 @@ public class AuthController {
     private AuthenticationManager authManager;
     private final InvalidEmailService invalidEmailService;
     private final UserDao customerDao;
+    private final CartDao cartDao;
 
-    public AuthController(InvalidEmailService invalidEmailService, UserDao customerDao) {
+    public AuthController(InvalidEmailService invalidEmailService, UserDao customerDao, CartDao cartDao) {
         this.invalidEmailService = invalidEmailService;
         this.customerDao = customerDao;
+        this.cartDao = cartDao;
     }
 
     @PostMapping("/register")
@@ -44,7 +48,8 @@ public class AuthController {
                 String encodedPass = passwordEncoder.encode(customer.getPassword());
                 customer.setPassword(encodedPass);
                 userDao.saveToDatabase(customer);
-                return jwtUtil.generateToken(customer.getEmail());
+                cartDao.saveToDatabase(new Cart(customer));
+                return new ApiResponse(HttpStatus.ACCEPTED, jwtUtil.generateToken(customer.getEmail()));
             } else {
                 return new ApiResponse(HttpStatus.BAD_REQUEST, "Invalid email");
             }
@@ -60,7 +65,7 @@ public class AuthController {
                 UsernamePasswordAuthenticationToken authInputToken =
                         new UsernamePasswordAuthenticationToken(loginCredentials.getEmail(), loginCredentials.getPassword());
                 authManager.authenticate(authInputToken);
-                return jwtUtil.generateToken(loginCredentials.getEmail());
+                return new ApiResponse(HttpStatus.ACCEPTED, jwtUtil.generateToken(loginCredentials.getEmail()));
             } else {
                 return new ApiResponse(HttpStatus.BAD_REQUEST, "Invalid email");
             }
