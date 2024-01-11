@@ -11,6 +11,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.AuthenticationException;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
@@ -73,5 +74,12 @@ public class AuthController {
     public ApiResponse<ArrayList<Customer>> getNewCustomerId() {
         int customerId = this.customerDao.giveNewCustomerId();
         return new ApiResponse(HttpStatus.ACCEPTED, customerId);
+    }
+
+    @GetMapping("/info")
+    public Customer getCustomerDetails() {
+        String email = (String) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        System.out.println("CHECKK" + SecurityContextHolder.getContext().getAuthentication());
+        return customerDao.findByEmail(email).get();
     }
 }

@@ -24,21 +24,23 @@ import static org.springframework.security.config.Customizer.withDefaults;
 @EnableWebSecurity
 public class SecurityConfig {
 
-    @Bean
-    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-        http.authorizeRequests(authorizeRequests -> authorizeRequests.anyRequest()
-                        .permitAll())
-                .csrf(AbstractHttpConfigurer::disable).cors();
-        return http.build();
-    }
+    @Autowired private JWTFilter filter;
 
     @Bean
-    public InMemoryUserDetailsManager userDetailsService() {
-        UserDetails user = User.withUsername("user")
-                .password("userPass")
-                .roles("USER")
-                .build();
-        return new InMemoryUserDetailsManager(user);
+    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+        http.authorizeRequests(authorizeRequests -> authorizeRequests
+                .requestMatchers("/api/v1/auth/**").permitAll()
+                .requestMatchers("/api/v1/auth/info").authenticated()
+                .requestMatchers("/api/v1/cartitems/**").authenticated()
+                .requestMatchers("/api/v1/product/**").permitAll()
+                .requestMatchers("/api/v1/product/insert").authenticated()
+                .requestMatchers("/api/v1/product/delete/{id}").authenticated()
+                .requestMatchers("/api/v1/user/**").authenticated()
+                )
+                .csrf(AbstractHttpConfigurer::disable).cors();
+
+        http.addFilterBefore(filter, UsernamePasswordAuthenticationFilter.class);
+        return http.build();
     }
 
     @Bean
