@@ -82,9 +82,8 @@ public class AuthController {
     }
 
     @GetMapping("/info")
-    public Customer getCustomerDetails() {
+    public ApiResponse getCustomerDetails() {
         String email = (String) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        System.out.println("CHECKK" + SecurityContextHolder.getContext().getAuthentication());
-        return customerDao.findByEmail(email).get();
+        return new ApiResponse(HttpStatus.ACCEPTED, customerDao.findByEmail(email).get());
     }
 }
