@@ -12,10 +12,21 @@ public class Customer {
     private String email;
     private String password;
 
-    public Customer(Long id, String email, String password) {
+    private String role;
+
+    public Customer(Long id, String email, String password, String role) {
         this.id = id;
         this.email = email;
         this.password = password;
+        this.role = role;
+    }
+
+    public String getRole() {
+        return role;
+    }
+
+    public void setRole(String role) {
+        this.role = role;
     }
 
     public long getId() {
