@@ -7,7 +7,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 import java.util.ArrayList;
 
-@CrossOrigin(origins = {"*"}, maxAge = 4800, allowCredentials = "false")
+@CrossOrigin(origins = "http://164.92.145.160", maxAge = 4800, allowCredentials = "false")
 @RestController
 @RequestMapping(path = "/api/v1/product")
 public class ProductController {
