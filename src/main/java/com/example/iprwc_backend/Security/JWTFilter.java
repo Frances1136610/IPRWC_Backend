@@ -40,12 +40,6 @@ public class JWTFilter extends OncePerRequestFilter {
                 }
             }
         }
-
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        if (authentication != null) {
-            System.out.println("Authenticated user roles: " + authentication.getAuthorities());
-        }
-
         filterChain.doFilter(request, response);
     }
 }
