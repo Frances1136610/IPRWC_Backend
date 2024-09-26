@@ -8,14 +8,14 @@ import lombok.NoArgsConstructor;
 @Table(name = "carts")
 public class Cart {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
     @OneToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "user_id", referencedColumnName = "id")
     private Customer user;
 
-    public Cart(Customer customer) {
+    public Cart(long id, Customer customer) {
+        this.id = id;
         this.user = customer;
     }
 

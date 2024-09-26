@@ -1,4 +1,4 @@
-package com.example.iprwc_backend.Security;
+package com.example.iprwc_backend.security;
 
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.JWTVerifier;

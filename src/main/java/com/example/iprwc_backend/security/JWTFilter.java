@@ -1,10 +1,9 @@
-package com.example.iprwc_backend.Security;
+package com.example.iprwc_backend.security;
 
 import com.auth0.jwt.exceptions.JWTVerificationException;
 import com.example.iprwc_backend.services.CustomUserDetailService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;

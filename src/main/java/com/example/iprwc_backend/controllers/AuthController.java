@@ -1,6 +1,6 @@
 package com.example.iprwc_backend.controllers;
 
-import com.example.iprwc_backend.Security.JwtUtil;
+import com.example.iprwc_backend.security.JwtUtil;
 import com.example.iprwc_backend.daos.CartDao;
 import com.example.iprwc_backend.daos.UserDao;
 import com.example.iprwc_backend.models.ApiResponse;
@@ -48,13 +48,13 @@ public class AuthController {
                 String encodedPass = passwordEncoder.encode(customer.getPassword());
                 customer.setPassword(encodedPass);
                 userDao.saveToDatabase(customer);
-                cartDao.saveToDatabase(new Cart(customer));
+                cartDao.saveToDatabase(new Cart(customer.getId(), customer));
                 return new ApiResponse(HttpStatus.ACCEPTED, jwtUtil.generateToken(customer.getEmail()));
             } else {
                 return new ApiResponse(HttpStatus.BAD_REQUEST, "Invalid email");
             }
         } catch (Exception e) {
-            return new ApiResponse(HttpStatus.BAD_REQUEST, "Email already in use");
+            return new ApiResponse(HttpStatus.BAD_REQUEST, "Something went wrong");
         }
     }
 

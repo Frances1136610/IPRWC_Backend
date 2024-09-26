@@ -7,7 +7,7 @@ import org.springframework.core.SpringVersion;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @SpringBootTest
-class IprwcBackendApplicationTests {
+class iprwcBackendApplicationTests {
 
     @Test
     void contextLoads() {
