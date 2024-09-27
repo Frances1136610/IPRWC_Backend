@@ -66,7 +66,7 @@
     </dependencies>
 
     <build>
-        <finalName>${project.artifactId}</finalName>
+        <finalName>ipsenho-github-actions</finalName>
         <plugins>
             <plugin>
                 <groupId>org.springframework.boot</groupId>
