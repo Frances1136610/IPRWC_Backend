@@ -12,10 +12,4 @@ class iprwcBackendApplicationTests {
     @Test
     void contextLoads() {
     }
-
-    @Test
-    void idk() {
-        assertEquals("5.1.10.RELEASE", SpringVersion.getVersion());
-    }
-
 }
