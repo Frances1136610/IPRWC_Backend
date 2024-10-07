@@ -23,7 +23,5 @@ jobs:
     - name: Build with Maven
       run: mvn clean install
 
-    - name: Run docker-compose
-      uses: hoverkraft-tech/compose-action@v2.0.1
-      with:
-        compose-file: '.\docker-compose.yml'
+    - name: Build the docker-compose stack
+      run: docker-compose up -d
