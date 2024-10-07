@@ -19,16 +19,21 @@ jobs:
         java-version: '17'
         distribution: 'temurin'
         cache: maven
+
     - name: Build with Maven
       run: mvn clean install
 
-    - name: Build & push Docker image
-      uses: mr-smithers-excellent/docker-build-push@v5
-      with:
-        image: francestwisk/ipsenho-github-actions
-        tags: latest
-        registry: docker.io
-        dockerfile: Dockerfile
-        username: ${{ secrets.DOCKER_USERNAME }}
-        password: ${{ secrets.DOCKER_PASSWORD }}
+    - name: Set up Docker Buildx
+      uses: docker/setup-buildx-action@v2
 
+    - name: Build and push Docker image
+      run: docker-compose -f docker-compose.yml build
+
+    - name: Run Docker Compose
+      run: docker-compose up -d
+
+    - name: Run Tests
+      run: docker exec my-app npm test
+
+    - name: Stop Docker Compose
+      run: docker-compose down
