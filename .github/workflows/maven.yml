@@ -24,4 +24,4 @@ jobs:
       run: mvn clean install
 
     - name: Build the docker compose stack
-      run: docker compose up -d
+      run: docker compose up --build
